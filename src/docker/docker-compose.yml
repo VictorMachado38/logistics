@@ -1,0 +1,7 @@
+version: '3.3'
+services:
+  postgress-14-image:
+    ports:
+      - '5432:5432'
+    container_name: Banco-de-Dados
+    image: postgress-14-image
