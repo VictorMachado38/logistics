@@ -1,7 +1,7 @@
 package com.br.logistics.model.dao.impl;
 
 import com.br.logistics.model.dao.AbstractDAOConnection;
-import com.br.logistics.model.dto.ClienteDTO;
+import com.br.logistics.model.dto.FormDTO;
 import com.br.logistics.model.entity.Cliente;
 import org.springframework.stereotype.Repository;
 
@@ -47,6 +47,6 @@ public class ClienteDAO extends AbstractDAOConnection {
     String email;
     String cnpj;
 
-    public void save(ClienteDTO cliente) {
+    public void save(FormDTO cliente) {
     }
 }

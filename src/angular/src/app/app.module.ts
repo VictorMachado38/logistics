@@ -24,6 +24,7 @@ import {DialogModule} from "primeng/dialog";
 import {CheckboxModule} from "primeng/checkbox";
 import {MessageService} from "primeng/api";
 import {ToggleButtonModule} from "primeng/togglebutton";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
     declarations: [
@@ -52,7 +53,8 @@ import {ToggleButtonModule} from "primeng/togglebutton";
         HttpClientJsonpModule,
         DialogModule,
         CheckboxModule,
-        ToggleButtonModule
+        ToggleButtonModule,
+        ToastModule
 
     ],
     providers: [MessageService],

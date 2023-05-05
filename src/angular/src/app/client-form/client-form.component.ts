@@ -16,9 +16,9 @@ import {EnderecoDTO} from "../../model/dto/endereco.dto";
     templateUrl: './client-form.component.html',
     styleUrls: ['./client-form.component.scss']
 })
-export class ClientFormComponent implements OnInit, AfterViewInit,AfterViewChecked {
+export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
-    constructor(private _http: HttpClient, private messageService: MessageService) {
+    constructor(private _http: HttpClient, private _messageService: MessageService) {
         this.apiLoaded = _http.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyAySnmKfLixyCP1PYecI2VATPrG7kUMseM', 'callback')
             .pipe(
                 map(() => true),
@@ -100,15 +100,24 @@ export class ClientFormComponent implements OnInit, AfterViewInit,AfterViewCheck
     sendForm() {
         // if()
         if (this.cliete.cnpj === undefined || this.cliete.cnpj === null || this.cliete.cnpj.length < 14) {
-
             this.invalCnpj = true;
             return;
-
         }
 
         this._http.post(`http://localhost:8080/client/save`, this.cliete).subscribe({
-            next: (v) => {
-                console.log(v);
+            next: (retorno: any) => {
+                console.log(retorno.status);
+                if (retorno.status === 200) {
+                    window.alert("Cliente cadastrado com sucesso")
+                    this._messageService.add({ severity: 'success', summary: retorno.message, detail: retorno.description});
+
+                }
+
+                const data = retorno.data;
+                console.log(data,"data");
+
+                console.log(retorno);
+
             },
             error: (err) => {
                 // this.erros.push(nome);
@@ -117,12 +126,13 @@ export class ClientFormComponent implements OnInit, AfterViewInit,AfterViewCheck
 
 
     }
+
     getCEP(cep: string) {
         // if()
 
 
-        this._http.get(`https://cdn.apicep.com/file/apicep/`+cep+`.json`).subscribe({
-            next: (v:any) => {
+        this._http.get(`https://cdn.apicep.com/file/apicep/` + cep + `.json`).subscribe({
+            next: (v: any) => {
                 console.log(v);
                 const a = v.address;
                 this.cliete.endereco = v.address;
@@ -153,9 +163,9 @@ export class ClientFormComponent implements OnInit, AfterViewInit,AfterViewCheck
             this.infoWindow.open(event.map, event.overlay);
             event.map.setCenter(event.overlay.getPosition());
 
-            this.messageService.add({severity: 'info', summary: 'Marker Selected', detail: title});
+            this._messageService.add({severity: 'info', summary: 'Marker Selected', detail: title});
         } else {
-            this.messageService.add({severity: 'info', summary: 'Shape Selected', detail: ''});
+            this._messageService.add({severity: 'info', summary: 'Shape Selected', detail: ''});
         }
     }
 
@@ -171,7 +181,7 @@ export class ClientFormComponent implements OnInit, AfterViewInit,AfterViewCheck
     }
 
     handleDragEnd(event: any) {
-        this.messageService.add({severity: 'info', summary: 'Marker Dragged', detail: event.overlay.getTitle()});
+        this._messageService.add({severity: 'info', summary: 'Marker Dragged', detail: event.overlay.getTitle()});
     }
 
     initOverlays() {
@@ -219,9 +229,13 @@ export class ClientFormComponent implements OnInit, AfterViewInit,AfterViewCheck
     }
 
     getEndereco($event: any) {
-        if(this.cliete.cep?.length === 8 || this.cliete.cep?.length === 7){
+        if (this.cliete.cep?.length === 8 || this.cliete.cep?.length === 7) {
             const cepComHifen = this.cliete.cep.slice(0, 5) + "-" + this.cliete.cep.slice(5);
             cepComHifen.length === 9 && this.getCEP(cepComHifen);
         }
+    }
+
+    showSuccess() {
+        this._messageService.add({life: 5000,severity: 'custom', summary: 'Success', detail: 'Message Content'});
     }
 }

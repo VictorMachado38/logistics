@@ -1,6 +1,6 @@
 package com.br.logistics.model.entity;
 
-import com.br.logistics.model.dto.ClienteDTO;
+import com.br.logistics.model.dto.FormDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,15 +18,16 @@ import lombok.Data;
 @Table(name = "cliente", schema = "public")
 @Data
 public class Cliente {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
     private String nome;
     private String codigo;
+    @Column(nullable = false, unique = true)
     private String cnpj;
+    @OneToOne(mappedBy = "clienteId")
+    private Endereco endereco;
 
     @Builder
     public Cliente(Long id, String nome, String codigo, String cnpj) {
@@ -37,12 +38,11 @@ public class Cliente {
     }
 
     public Cliente() {
-
     }
 
-    public ClienteDTO toDTO() {
-        return ClienteDTO.builder()
-                .id(this.id)
+    public FormDTO toDTO() {
+        return FormDTO.builder()
+                .clienteId(this.id)
                 .nome(this.nome)
                 .codigo(this.codigo)
                 .cnpj(this.cnpj)

@@ -1,26 +1,54 @@
+## Prova Java Logística  (88% concluído)
 
-### Requisitos Funcionais:
+### 📋 Pré-requisitos
+```
+Java 17
+Angular 13
+Node
+IDE
+Docker(opcional)
+```
 
-* Cadastro de cliente com Código, Nome e CNPJ
-* Cadastro de Endereço do cliente com localização geográfica
-* Vinculação do Endereço ao Cliente
-* Visualização dos clientes em um mapa com opções de filtro
+### 🔧 Instalação
 
-### Requisitos Não Funcionais:
+Diga como essa etapa será:
+##### Angular
+Instale o node e o npm [clique aqui para aprender](https://nodejs.org/pt-br/download/package-manager)
+```
+npm i @angular/cli@13.3.11
+```
+Instale as dependências do projeto no diretório ***logistics/src/angular/***, roda o comando:
+```
+npm install
+```
+Para rodar o projeto, execute o comando:
+```
+ng serve
+```
+##### Java
+Instale o Java 17 [clique aqui para aprender](https://www.oracle.com/br/java/technologies/javase-jdk17-downloads.html) ....... continua
+```
+....... continua 
+```
 
-* O sistema deve ser seguro, garantindo a integridade e confidencialidade das informações
-* O sistema deve ser responsivo e fácil de usar
-* O sistema deve ter um tempo de resposta rápido
-* O sistema deve ser escalável para lidar com um grande número de clientes e endereços
-### Regras de Negócio:
 
-* Um cliente não pode ser cadastrado sem Nome, CNPJ e Endereço com localização
-* Os campos de Código, Nome e CNPJ devem ser obrigatórios no cadastro do cliente
-* O endereço do cliente deve conter localização geográfica
-* O endereço deve ser vinculado ao cliente no cadastro
-* O mapa de visualização dos clientes deve permitir filtrar os clientes por nome, CNPJ e localização geográfica.
 
-### Considerações Adicionais:
+## 🛠️ Construído com
 
-* O sistema deve permitir o armazenamento de múltiplos endereços para um único cliente, caso necessário
-* O sistema deve permitir a atualização dos dados do cliente e endereço, bem como a exclusão dos mesmos.
+* [Angular](https://www.npmjs.com/package/@angular/cli/v/13.3.11) - Framework  
+* [Maven](https://maven.apache.org/) - Gerente de Dependência
+* [Java](https://www.java.com/pt-BR/) - Linguagem de Programação para o backend
+* [Docker](https://www.docker.com/) - Container para o banco de dados e backend e frontend (TUDO)
+* [PostgreSQL](https://www.postgresql.org/) - Banco de Dados
+* [Spring](https://spring.io/) - Framework para o backend
+* [Hibernate](https://hibernate.org/) - Framework para o backend
+* [Lombok](https://projectlombok.org/) - Framework para o backend
+
+## 📌 Versão
+
+Padrão [git](https://git-scm.com/) para controle de versão. 
+
+## ✒️ Autores
+
+
+* **Victor Augusto** - *Desenvoldevor* - [Linkedin](https://www.linkedin.com/in/victormachado38/)
