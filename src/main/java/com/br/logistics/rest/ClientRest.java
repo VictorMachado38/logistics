@@ -5,6 +5,7 @@ import com.br.logistics.model.dao.impl.ClientInterfaceDAO;
 import com.br.logistics.model.dao.impl.ClienteDAO;
 import com.br.logistics.model.dao.impl.ClienteDAO2;
 import com.br.logistics.model.dto.ClienteDTO;
+import com.br.logistics.model.dto.ResponseDTO;
 import com.br.logistics.model.entity.Cliente;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,18 @@ public class ClientRest {
     @Autowired
     private ClientInterfaceDAO clientInterfaceDAO;
 
+
     @PostMapping("/save")
     @CrossOrigin(origins = "*", maxAge = 3600)
     public ResponseEntity<ClienteDTO> saveClient(@RequestBody ClienteDTO cliente) {
         return bo.saveClient(cliente,clientInterfaceDAO);
+    }
+
+
+    @PostMapping("/save3")
+    @CrossOrigin(origins = "*", maxAge = 3600)
+    public ResponseDTO<ClienteDTO> saveCliedasnt2(@RequestBody ClienteDTO cliente) {
+        return bo.saveClient2(cliente,clientInterfaceDAO);
     }
 
 

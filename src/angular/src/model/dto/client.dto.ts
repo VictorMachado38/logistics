@@ -1,9 +1,20 @@
+import {EnderecoDTO} from "./endereco.dto";
+
 export class ClientDTO{
     constructor(
         public id?: any,
-        public nome?: any,
-        public codigo?: any,
+        public nome?: string,
+        public codigo?: string,
         public cnpj?: any,
+        public endereco?: string,
+        public rua?: string,
+        public estado?: string,
+        public cidade?: string,
+        public cep?: string,
+        public setor?: string,
+        public complemento?: string,
+
     ) {
+
     }
 }

@@ -8,21 +8,30 @@ import {ClientListComponent} from './client-list/client-list.component';
 import {TabMenuModule} from "primeng/tabmenu";
 import {RouterModule} from "@angular/router";
 import {ButtonModule} from "primeng/button";
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientJsonpModule, HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule} from "@angular/forms";
 import {TableModule} from "primeng/table";
 import {MenubarModule} from "primeng/menubar";
 import {ChipsModule} from "primeng/chips";
 import {InputMaskModule} from "primeng/inputmask";
-import { cnpj } from 'cpf-cnpj-validator';
+import {cnpj} from 'cpf-cnpj-validator';
+import {GMapModule} from "primeng/gmap";
+import {MapComponent} from './map/map.component';
+import {CommonModule} from "@angular/common";
+import {GoogleMapsModule} from "@angular/google-maps";
+import {DialogModule} from "primeng/dialog";
+import {CheckboxModule} from "primeng/checkbox";
+import {MessageService} from "primeng/api";
+import {ToggleButtonModule} from "primeng/togglebutton";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ClientFormComponent,
-    ClientListComponent
-  ],
+    declarations: [
+        AppComponent,
+        ClientFormComponent,
+        ClientListComponent,
+        MapComponent
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -35,10 +44,19 @@ import { cnpj } from 'cpf-cnpj-validator';
         FormsModule,
         MenubarModule,
         ChipsModule,
-        InputMaskModule
+        InputMaskModule,
+        GMapModule,
+        CommonModule,
+        GoogleMapsModule,
+        HttpClientModule,
+        HttpClientJsonpModule,
+        DialogModule,
+        CheckboxModule,
+        ToggleButtonModule
+
     ],
-  providers: [],
-  bootstrap: [AppComponent]
+    providers: [MessageService],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }
