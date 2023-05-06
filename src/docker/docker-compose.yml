@@ -5,3 +5,8 @@ services:
       - '5432:5432'
     container_name: Banco-de-Dados
     image: postgress-14-image
+#  angular:
+#    ports:
+#      - '80:80/tcp'
+#    container_name: angular
+#    image: app-angulat-teste
