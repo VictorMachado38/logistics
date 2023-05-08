@@ -1,5 +1,9 @@
 ## Prova Java Logística
 
+<p align="center">
+  <img width="704.4" height="462" src="/src/video.gif">
+</p>
+
 ### 📋 Pré-requisitos
 ```
 Java 17
