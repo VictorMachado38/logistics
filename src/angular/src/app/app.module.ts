@@ -25,13 +25,15 @@ import {CheckboxModule} from "primeng/checkbox";
 import {MessageService} from "primeng/api";
 import {ToggleButtonModule} from "primeng/togglebutton";
 import {ToastModule} from "primeng/toast";
+import { InitComponent } from './init/init.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         ClientFormComponent,
         ClientListComponent,
-        MapComponent
+        MapComponent,
+        InitComponent
     ],
     imports: [
         BrowserModule,

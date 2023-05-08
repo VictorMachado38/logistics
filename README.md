@@ -1,4 +1,4 @@
-## Prova Java Logística  (88% concluído)
+## Prova Java Logística
 
 ### 📋 Pré-requisitos
 ```
@@ -9,6 +9,17 @@ IDE
 Docker(opcional)
 ```
 
+### 🐋🚢 Rordar com o docker
+O compose está configurado para rodar o backend na porta 8081 e o frontend na porta 9000, caso queira mudar e o banco na 5432, altere o arquivo ***docker-compose.yml***.
+
+O docker hub do porjeto é [Docker-hub-link](https://hub.docker.com/repository/docker/victormachado38/logistics/general)
+
+
+Para rodar o docker, execute o comando:
+```
+docker-compose up
+```
+Depois abre o navegador e digite ***localhost:9000***.
 ### 🔧 Instalação
 
 Diga como essa etapa será:

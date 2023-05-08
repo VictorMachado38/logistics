@@ -3,7 +3,7 @@
     <!--    cliente-->
     <div class="col-4">
 
-        <samp class="format-client-title">Cadastro Cliente</samp>
+        <samp class="format-client-title">{{titlePage}}</samp>
 
         <div style="display: flex; width: 100%">
             <div class="field" style=" width: 35%; padding-right: 1rem">
@@ -86,9 +86,7 @@
         <button (click)="sendForm()" pButton pRipple type="button" label="Enviar"
                 class="p-button-outlined p-button-rounded p-button-sm"></button>
 
-
         {{selectedPosition | json}}
-
 
     </div>
     <!--    mapa-->

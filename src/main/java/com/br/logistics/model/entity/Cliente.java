@@ -2,10 +2,6 @@ package com.br.logistics.model.entity;
 
 import com.br.logistics.model.dto.FormDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.Builder;

@@ -2,6 +2,12 @@
 
 FROM eclipse-temurin:17-jdk-jammy
 
-COPY ../../../target/logistics-0.0.1-SNAPSHOT.jar /tpm
+COPY ../../../target/logistics-0.0.1-SNAPSHOT.jar .
 
-ENTRYPOINT ["java","-jar","/tpm/logistics-0.0.1-SNAPSHOT.jar"]
+# CASO PRECISE ja ta no esqueleto
+#ENV DATABASE_URL=jdbc:postgresql://172.18.0.2:5432/postgres
+#ENV DATABASE_URL=jdbc:postgresql://Banco-de-Dados:5432/postgres
+#ENV DATABASE_USERNAME=postgres
+#ENV DATABASE_PASSWORD=admin
+
+ENTRYPOINT ["java","-jar","logistics-0.0.1-SNAPSHOT.jar"]

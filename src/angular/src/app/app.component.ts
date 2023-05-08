@@ -23,19 +23,16 @@ export class AppComponent implements OnInit {
 
     this.items = [
       {
-        label: 'Clientes',
-        items: [
-          {label: 'Cadatrar',routerLink: 'form'},
-          {label: 'Listar' ,routerLink: 'list'}
-        ]
+        label: 'Cadastrar Cliente',
+        routerLink: 'form'
       },
       {
-        label: 'Edit',
-        icon: 'pi pi-fw pi-pencil',
-        items: [
-          {label: 'Delete', icon: 'pi pi-fw pi-trash'},
-          {label: 'Refresh', icon: 'pi pi-fw pi-refresh'}
-        ]
+        label: 'Listar/Editar de Clientes',
+        routerLink: 'list'
+      },
+      {
+        label: 'Requisitos da Aplicação',
+        routerLink: 'init'
       }
     ];
   }

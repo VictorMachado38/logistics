@@ -23,6 +23,8 @@ public class FormDTO {
     private String latitude;
     private String longitude;
 
+    public FormDTO() {
+    }
     @Builder
     public FormDTO(Long clienteId, String nome, String codigo, String cnpj, Long enderecoId, String endereco, String rua, String estado, String cidade, String cep, String setor, String complemento, String latitude, String longitude) {
         this.clienteId = clienteId;

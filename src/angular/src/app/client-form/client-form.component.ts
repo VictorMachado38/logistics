@@ -9,6 +9,8 @@ import {Observable, of} from "rxjs";
 import {MessageService} from "primeng/api";
 import {GoogleMapsModule} from "@angular/google-maps";
 import {EnderecoDTO} from "../../model/dto/endereco.dto";
+import {ActivatedRoute} from "@angular/router";
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -18,7 +20,10 @@ import {EnderecoDTO} from "../../model/dto/endereco.dto";
 })
 export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
-    constructor(private _http: HttpClient, private _messageService: MessageService) {
+    constructor(private _http: HttpClient,
+                private _messageService: MessageService,
+                private _route: ActivatedRoute,
+                private _location: Location) {
         this.apiLoaded = _http.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyAySnmKfLixyCP1PYecI2VATPrG7kUMseM', 'callback')
             .pipe(
                 map(() => true),
@@ -38,10 +43,17 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
     options: any;
     overlays: any[] = [];
     marcarNoMapa: boolean = false;
-    asdasdas: string = "asdasdasd";
+    titlePage: string = 'Cadastro de Cliente';
+
 
     ngOnInit(): void {
-
+        const url = this._location.path();
+        if (url !== '/form') {
+            this.cliete = Object.assign({}, this._route.snapshot.queryParams);
+            this.titlePage = 'Edição de Cliente';
+        } else {
+            this.titlePage = 'Cadastro de Cliente';
+        }
 
         this.options = {
             center: {lat: -16.688059517919058, lng: -49.26408132103648},
@@ -104,23 +116,30 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
             return;
         }
 
-        this._http.post(`http://localhost:8080/client/save`, this.cliete).subscribe({
+        this._http.post(`http://172.19.0.19:8081/client/save`, this.cliete).subscribe({
             next: (retorno: any) => {
-                console.log(retorno.status);
+                this.cliete = retorno.data;
                 if (retorno.status === 200) {
-                    window.alert("Cliente cadastrado com sucesso")
-                    this._messageService.add({ severity: 'success', summary: retorno.message, detail: retorno.description});
+                    this._messageService.add({
+                        severity: 'success',
+                        summary: retorno.message,
+                        detail: retorno.description
+                    });
 
+                } else {
+                    this._messageService.add({
+                        severity: 'error',
+                        summary: 'Erro ao cadastrar cliente'
+                    });
                 }
-
                 const data = retorno.data;
-                console.log(data,"data");
-
-                console.log(retorno);
 
             },
             error: (err) => {
-                // this.erros.push(nome);
+                this._messageService.add({
+                    severity: 'error',
+                    summary: 'Erro ao cadastrar cliente'
+                });
             },
         });
 
@@ -133,7 +152,6 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
 
         this._http.get(`https://cdn.apicep.com/file/apicep/` + cep + `.json`).subscribe({
             next: (v: any) => {
-                console.log(v);
                 const a = v.address;
                 this.cliete.endereco = v.address;
                 this.cliete.estado = v.state;
@@ -236,6 +254,6 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
     }
 
     showSuccess() {
-        this._messageService.add({life: 5000,severity: 'custom', summary: 'Success', detail: 'Message Content'});
+        this._messageService.add({life: 5000, severity: 'custom', summary: 'Success', detail: 'Message Content'});
     }
 }

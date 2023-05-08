@@ -10,7 +10,7 @@ import java.sql.Statement;
 @Data
 public abstract class AbstractDAOConnection {
 
-    String url = "jdbc:postgresql://localhost:5432/postgres";
+    String url = "jdbc:postgresql://172.19.0.20:5432/postgres";
     String username = "postgres";
     String password = "admin";
     Connection conn;
@@ -25,6 +25,17 @@ public abstract class AbstractDAOConnection {
                 throw new RuntimeException(e);
             }
 
+        }
+    }
+
+    public void clouseConnection() {
+        {
+            try {
+                getStmt().close();
+                getConn().close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

@@ -3,10 +3,7 @@ package com.br.logistics.model.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.http.HttpStatusCode;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status.*;
 import java.io.Serializable;
 @Data
 public class ResponseDTO<T> implements Serializable {
