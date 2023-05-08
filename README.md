@@ -26,7 +26,6 @@ docker-compose up
 Depois abre o navegador e digite ***localhost:9000***.
 ### 🔧 Instalação
 
-Diga como essa etapa será:
 ##### Angular
 Instale o node e o npm [clique aqui para aprender](https://nodejs.org/pt-br/download/package-manager)
 ```
