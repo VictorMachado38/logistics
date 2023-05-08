@@ -4,7 +4,7 @@
   <img width="704.4" height="462" src="/src/video.gif">
 </p>
 
-### 📋 Pré-requisitos
+## 📋 Pré-requisitos
 ```
 Java 17
 Angular 13
@@ -13,20 +13,19 @@ IDE
 Docker(opcional)
 ```
 
-### 🐋🚢 Rordar com o docker
-O compose está configurado para rodar o backend na porta 8081 e o frontend na porta 9000, caso queira mudar e o banco na 5432, altere o arquivo ***docker-compose.yml***.
+## 🐋🚢 Rordar com o docker
+O compose está configurado para rodar o backend na porta 8081, o frontend na porta 9000 e o banco na 5432, caso queira mudar altere o arquivo logistics/src/docker/***[docker-compose.yml](src/docker/docker-compose.yml)***.
 
 O docker hub do porjeto é [Docker-hub-link](https://hub.docker.com/repository/docker/victormachado38/logistics/general)
-
 
 Para rodar o docker, execute o comando:
 ```
 docker-compose up
 ```
-Depois abre o navegador e digite ***localhost:9000***.
-### 🔧 Instalação
+Depois abre o navegador e digite [***localhost:9000***](http://localhost:9000/).
+## 🔧 Instalação
 
-##### Angular
+#### Angular
 Instale o node e o npm [clique aqui para aprender](https://nodejs.org/pt-br/download/package-manager)
 ```
 npm i @angular/cli@13.3.11
@@ -39,12 +38,10 @@ Para rodar o projeto, execute o comando:
 ```
 ng serve
 ```
-##### Java
-Instale o Java 17 [clique aqui para aprender](https://www.oracle.com/br/java/technologies/javase-jdk17-downloads.html) ....... continua
-```
-....... continua 
-```
+## Java
+Instale o Java 17 [clique aqui para aprender](https://www.oracle.com/br/java/technologies/javase-jdk17-downloads.html)
 
+Para rodar o projeto execute esse [arquivo](src/main/java/com/br/logistics/LogisticsApplication.java) localizado "***src/main/java/com/br/logistics/LogisticsApplication.java***"
 
 
 ## 🛠️ Construído com
