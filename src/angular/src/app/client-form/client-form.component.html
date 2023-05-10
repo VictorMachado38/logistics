@@ -15,14 +15,17 @@
                 <label for="input-cnpj"  [class]="invalCnpj ? 'v-color-red' : ' ' "  class="block">CNPJ</label>
                 <p-inputMask [class]="invalCnpj ? 'ng-invalid ng-dirty w-100' : 'w-100' " [unmask]="true"
                              id="input-cnpj"
+                                (onComplete)="validCnpj()"
                              [(ngModel)]="cliete.cnpj" mask="99.999.999/9999-99"></p-inputMask>
             </div>
         </div>
 
         <div class="field" style=" width: 100%">
-            <label for="input-name" [class]="invalCnpj ? 'v-color-red' : '' " class="block">Nome</label>
-            <input style=" width: 100%" id="input-name" [class]="invalCnpj ? 'ng-invalid ng-dirty' : '' " placeholder="" type="username"
-                   aria-describedby="username1-help" pInputText [(ngModel)]="cliete.nome"/>
+            <label for="input-name" [class]="invalName ? 'v-color-red' : '' " class="block">Nome</label>
+            <input style=" width: 100%" id="input-name" [class]="invalName ? 'ng-invalid ng-dirty' : '' " placeholder="" type="username"
+                   aria-describedby="username1-help" pInputText [(ngModel)]="cliete.nome"
+                   (ngModelChange)="validName()"
+            />
         </div>
         <hr>
         <samp class="format-addres-title">Endereço</samp>
@@ -30,10 +33,9 @@
         <div style="display: flex; width: 100%">
             <div class="field" style=" width: 35%;  padding-right: 1rem">
                 <label for="input-cep" class="block">CEP</label>
-                <p-inputMask [autoClear]="false" [class]="invalCnpj ? 'ng-invalid ng-dirty w-100' : 'w-100' "
+                <p-inputMask [autoClear]="false" [class]="invalCEP ? 'ng-invalid ng-dirty w-100' : 'w-100' "
                              [unmask]="true"
                              id="input-cep"
-
                              (onComplete)="getEndereco($event)"
                              [(ngModel)]="cliete.cep" mask="99999-999"></p-inputMask>
             </div>
@@ -76,11 +78,35 @@
                    aria-describedby="input-address" pInputText [(ngModel)]="cliete.endereco"/>
         </div>
 
+        <div style="display: flex; width: 100%;    align-items: center;">
+            <div class="field" style=" width: 42.5%;  padding-right: 1rem">
+                <label for="input-city" class="block">Latitude</label>
+                <input [readOnly]="true" class="no-focus-no-focus" style=" width: 100%;" id="input-lat" placeholder=""
+                       type="username"
+                       aria-describedby="input-city" pInputText [(ngModel)]="cliete.latitude"/>
+            </div>
+
+            <div class="field" style=" width: 42.5%;">
+                <label for="input-sector" class="block">Longitude</label>
+                <input style=" width: 100%" [readOnly]="true" class="no-focus-no-focus" id="input-long" placeholder=""
+                       type="username"
+                       aria-describedby="input-sector" pInputText [(ngModel)]="cliete.longitude"/>
+            </div>
+            <div  style=" width: 5%;margin: 0 auto">
+                <button type="button"  pButton label="" icon="pi pi-plus" (click)="addLongAndLatManual()"
+                        ></button>
+            </div>
+
+        </div>
+
         <div class="field" style=" width: 100%">
             <label for="input-complement" class="block">Complemento</label>
             <input style=" width: 100%" id="input-complement" placeholder="" type="username"
                    aria-describedby="input-complement" pInputText [(ngModel)]="cliete.complemento"/>
         </div>
+
+
+
 
 
         <button (click)="sendForm()" pButton pRipple type="button" label="Enviar"
@@ -107,7 +133,7 @@
 
         <p-dialog showEffect="fade" [(visible)]="dialogVisible" header="Nova localização"
                   [style]="{width: '300px'}">
-            <div class="grid p-fluid" *ngIf="selectedPosition">
+            <div class="grid p-fluid" *ngIf="selectedPosition && !manualAddMarker">
                 <!--                <div class="col-2"><label for="title">Label</label></div>-->
                 <!--                <div class="col-10"><input type="text" pInputText id="title" [(ngModel)]="markerTitle"></div>-->
 
@@ -122,6 +148,22 @@
                 <!--                <div class="col-2"><label for="drg">Drag</label></div>-->
                 <!--                <div class="col-10"><p-checkbox [(ngModel)]="draggable" id="drg" [style]="{'margin-top':'.25em'}"></p-checkbox></div>-->
             </div>
+            <div class="grid p-fluid" *ngIf="manualAddMarker">
+                <!--                <div class="col-2"><label for="title">Label</label></div>-->
+                <!--                <div class="col-10"><input type="text" pInputText id="title" [(ngModel)]="markerTitle"></div>-->
+
+                <div class="col-2" style="margin-top: 13px;"><label for="lat">Lat</label></div>
+                <div class="col-10"><input id="lat2" type="text"  pInputText [ngModel]="manualLat">
+                </div>
+
+                <div class="col-2" style="margin-top: 13px;"><label for="lng">Lng</label></div>
+                <div class="col-10"><input id="lng2" type="text"  pInputText [ngModel]="manualLng">
+                </div>
+
+                <!--                <div class="col-2"><label for="drg">Drag</label></div>-->
+                <!--                <div class="col-10"><p-checkbox [(ngModel)]="draggable" id="drg" [style]="{'margin-top':'.25em'}"></p-checkbox></div>-->
+            </div>
+
             <ng-template pTemplate="footer">
                 <div>
                     <button type="button" pButton label="Adicionar Marcador" icon="pi pi-plus"

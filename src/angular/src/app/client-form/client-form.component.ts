@@ -1,18 +1,13 @@
-import {AfterViewChecked, AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, NgZone, OnInit} from '@angular/core';
 import {ClientDTO} from "../../model/dto/client.dto";
 import {HttpClient} from "@angular/common/http";
-import {cpf} from 'cpf-cnpj-validator';
-import {cnpj} from 'cpf-cnpj-validator';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {catchError, map} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import {MessageService} from "primeng/api";
-import {GoogleMapsModule} from "@angular/google-maps";
-import {EnderecoDTO} from "../../model/dto/endereco.dto";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from '@angular/common';
-
-
+import validator, { cnpj } from 'cpf-cnpj-validator';
+import { isValidCNPJ } from 'js-cnpj-validation'
 @Component({
     selector: 'app-client-form',
     templateUrl: './client-form.component.html',
@@ -20,10 +15,11 @@ import {Location} from '@angular/common';
 })
 export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
-    constructor(private _http: HttpClient,
+    constructor(private ngZone: NgZone, private _http: HttpClient,
                 private _messageService: MessageService,
                 private _route: ActivatedRoute,
                 private _location: Location) {
+        this.iniciarTimer();
         this.apiLoaded = _http.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyAySnmKfLixyCP1PYecI2VATPrG7kUMseM', 'callback')
             .pipe(
                 map(() => true),
@@ -31,10 +27,39 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
             );
     }
 
+
+    iniciarTimer() {
+        setTimeout(() => {
+            if (this.cliete.longitude && this.cliete.latitude) {
+                // window.alert("Cliente cadastrado com sucesso!");
+                // console.log(parseFloat(this.cliete.longitude))
+                // console.log(parseFloat(this.cliete.latitude))
+                this.overlays.push(new google.maps.Marker({
+                    position: {
+                        lat: parseFloat(this.cliete.latitude),
+                        lng: parseFloat(this.cliete.longitude)
+                    }, draggable: false
+                }));
+            }
+            this.markerTitle = null;
+            this.dialogVisible = false;
+
+            // this.overlays.push(new google.maps.Marker({
+            //     position: {
+            //         lat:-16.703515449819243,
+            //         lng: -49.25256829507094
+            //     }, title: "Bora", draggable: false
+            // }));
+
+        }, 1000); // Tempo em milissegundos (3000 ms = 3 segundos)
+    }
+
+
     apiLoaded: Observable<boolean>;
     cliete = new ClientDTO();
     invalName: boolean = false;
     invalCnpj: boolean = false;
+    invalCEP: boolean = false;
     dialogVisible: boolean = false
     markerTitle: any = null;
     selectedPosition: any;
@@ -44,21 +69,40 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
     overlays: any[] = [];
     marcarNoMapa: boolean = false;
     titlePage: string = 'Cadastro de Cliente';
-
+    manualAddMarker: boolean = false;
+    manualLat: any;
+    manualLng: any;
+    label1: string = '';
+    label2: string = '';
+    label3: string = '';
 
     ngOnInit(): void {
         const url = this._location.path();
         if (url !== '/form') {
             this.cliete = Object.assign({}, this._route.snapshot.queryParams);
             this.titlePage = 'Edição de Cliente';
+            if (this.cliete.longitude && this.cliete.latitude) {
+                this.options = {
+                    center: {
+                        lat: parseFloat(this.cliete.latitude),
+                        lng: parseFloat(this.cliete.longitude)
+                    },
+                    zoom: 13
+                };
+            } else {
+                this.titlePage = 'Cadastro de Cliente';
+                this.options = {
+                    center: {lat: -16.688059517919058, lng: -49.26408132103648},
+                    zoom: 12
+                };
+            }
         } else {
             this.titlePage = 'Cadastro de Cliente';
+            this.options = {
+                center: {lat: -16.688059517919058, lng: -49.26408132103648},
+                zoom: 12
+            };
         }
-
-        this.options = {
-            center: {lat: -16.688059517919058, lng: -49.26408132103648},
-            zoom: 12
-        };
 
 
         // this.overlays = [
@@ -82,9 +126,9 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
 
     ngAfterViewInit(): void {
         // this.overlays = [
-        //     new google.maps.Marker({position: {lat: -16.703515449819243, lng: -49.25256829507094}, title:"Konyaalti"}),
+        //     new google.maps.Marker({position: {lat: -16.695013166810583, lng: -49.30380482606966}, title:"Konyaalti"}),
         // ];
-        //
+
 
         // this.selectedPosition = {lat: -16.688059517919058, lng: -49.26408132103648}
         // this.overlays.push(new google.maps.Marker({position: {lat: -16.703515449819243, lng: -49.25256829507094}, title:"Konyaalti"}));
@@ -97,7 +141,7 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
         //     new google.maps.Marker({position: {lat: -16.703515449819243, lng: -49.25256829507094}, title:"Konyaalti"}),
         // ];
         // this.overlays.push(new google.maps.Marker({position: {lat: -16.703515449819243, lng: -49.25256829507094}, title:"Konyaalti"}));
-        //
+
         // this.overlays.push(new google.maps.Marker({
         //     position: {
         //         lat:-16.703515449819243,
@@ -109,41 +153,63 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
 
     }
 
+     formatarCNPJ(cnpj: string): string {
+        cnpj = cnpj.replace(/\D/g, '');
+        return cnpj.substr(0, 2) + '.' + cnpj.substr(2, 3) + '.' + cnpj.substr(5, 3) + '/' + cnpj.substr(8, 4) + '-' + cnpj.substr(12);
+    }
+    // cnpj: cnpj = new cnpj();
     sendForm() {
-        // if()
-        if (this.cliete.cnpj === undefined || this.cliete.cnpj === null || this.cliete.cnpj.length < 14) {
+        const _cnpj = require('js-cnpj-validation');
+        if (this.cliete.cnpj === undefined || this.cliete.cnpj === null || this.cliete.cnpj.length !== 14 ||  !_cnpj.isValidCNPJ(this.formatarCNPJ(this.cliete.cnpj))) {
             this.invalCnpj = true;
-            return;
+            this.label1 = 'CNPJ, ';
+        }else this.label1 = '';
+        if (this.cliete.nome === undefined || this.cliete.nome === null || this.cliete.nome.length <= 0) {
+            this.invalName = true;
+            this.label2 = 'NOME, ';
+        } else this.label2 = '';
+        if (this.cliete.cep === undefined || this.cliete.cep === null || this.cliete.cep.length !== 8) {
+            this.invalCEP = true;
+            this.label3 = 'CEP, ';
+            this.cliete.cep = '';
+        } else this.label3 = '';
+        if (this.invalCnpj || this.invalName || this.invalCEP){
+            this._messageService.add({
+                severity: 'error',
+                summary: 'Erro ao cadastrar cliente',
+                detail:   this.label1 + this.label2 + this.label3 + ' inválido(s)'
+            });
+
         }
 
-        this._http.post(`http://172.19.0.19:8081/client/save`, this.cliete).subscribe({
-            next: (retorno: any) => {
-                this.cliete = retorno.data;
-                if (retorno.status === 200) {
-                    this._messageService.add({
-                        severity: 'success',
-                        summary: retorno.message,
-                        detail: retorno.description
-                    });
+        if (!this.invalCnpj && !this.invalName && !this.invalCEP) {
+            this._http.post(`http://localhost:8081/client/save`, this.cliete).subscribe({
+                next: (retorno: any) => {
+                    this.cliete = retorno.data;
+                    if (retorno.status === 200) {
+                        this._messageService.add({
+                            severity: 'success',
+                            summary: retorno.message,
+                            detail: retorno.description
+                        });
 
-                } else {
+                    } else {
+                        this._messageService.add({
+                            severity: 'error',
+                            summary: 'Erro ao cadastrar cliente'
+                        });
+                    }
+                    const data = retorno.data;
+
+                },
+                error: (err) => {
                     this._messageService.add({
                         severity: 'error',
                         summary: 'Erro ao cadastrar cliente'
                     });
-                }
-                const data = retorno.data;
-
-            },
-            error: (err) => {
-                this._messageService.add({
-                    severity: 'error',
-                    summary: 'Erro ao cadastrar cliente'
-                });
-            },
-        });
-
-
+                },
+            });
+        }
     }
 
     getCEP(cep: string) {
@@ -188,14 +254,31 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
     }
 
     addMarker() {
-        this.overlays.push(new google.maps.Marker({
-            position: {
-                lat: this.selectedPosition.lat(),
-                lng: this.selectedPosition.lng()
-            }, title: this.markerTitle, draggable: this.draggable
-        }));
-        this.markerTitle = null;
-        this.dialogVisible = false;
+        console.log(this.overlays, "Antes", this.overlays.length)
+        // window.alert(this.selectedPosition === undefined)
+        if (this.overlays.length === 0) {
+
+            this.overlays.push(new google.maps.Marker({
+                position: {
+                    lat: this.selectedPosition !== undefined ? this.selectedPosition.lat() : parseFloat(this.manualLat),
+                    lng: this.selectedPosition !== undefined ? this.selectedPosition.lng() : parseFloat(this.manualLng)
+                }, title: "this.markerTitle", draggable: this.draggable
+            }));
+
+            this.cliete.latitude = this.selectedPosition !== undefined ? this.selectedPosition.lat() : this.manualLat;
+            this.cliete.longitude = this.selectedPosition !== undefined ? this.selectedPosition.lng() : this.manualLng;
+            this.manualAddMarker = false;
+            this.markerTitle = null;
+            this.dialogVisible = false;
+        } else {
+            this._messageService.add({
+                severity: 'warn',
+                summary: "Limpe o marcador",
+                detail: "O sistema so aceita 1 marcador"
+            })
+            this.dialogVisible = false;
+        }
+        console.log(this.overlays, "Depois")
     }
 
     handleDragEnd(event: any) {
@@ -244,16 +327,43 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
 
     clear() {
         this.overlays = [];
+        this.cliete.longitude = '';
+        this.cliete.latitude = '';
     }
 
     getEndereco($event: any) {
         if (this.cliete.cep?.length === 8 || this.cliete.cep?.length === 7) {
             const cepComHifen = this.cliete.cep.slice(0, 5) + "-" + this.cliete.cep.slice(5);
             cepComHifen.length === 9 && this.getCEP(cepComHifen);
+            this.invalCEP = false;
         }
     }
 
     showSuccess() {
         this._messageService.add({life: 5000, severity: 'custom', summary: 'Success', detail: 'Message Content'});
+    }
+
+    addLongAndLatManual() {
+        if (this.overlays.length === 0) {
+            this.dialogVisible = true;
+            this.manualAddMarker = true;
+        } else {
+            this._messageService.add({
+                severity: 'warn',
+                summary: "Limpe o marcador",
+                detail: "O sistema so aceita 1 marcador"
+            })
+            this.dialogVisible = false;
+        }
+        // this.selectedPosition = event.latLng;
+    }
+
+    validName() {
+        this.invalName = false;
+    }
+
+    validCnpj() {
+        const _cnpj = require('js-cnpj-validation');
+        _cnpj.isValidCNPJ(this.formatarCNPJ(this.cliete.cnpj)) ? this.invalCnpj = false : this.invalCnpj = true;
     }
 }

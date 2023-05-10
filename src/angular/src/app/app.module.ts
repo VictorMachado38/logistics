@@ -22,10 +22,11 @@ import {CommonModule} from "@angular/common";
 import {GoogleMapsModule} from "@angular/google-maps";
 import {DialogModule} from "primeng/dialog";
 import {CheckboxModule} from "primeng/checkbox";
-import {MessageService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
 import {ToggleButtonModule} from "primeng/togglebutton";
 import {ToastModule} from "primeng/toast";
 import { InitComponent } from './init/init.component';
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @NgModule({
     declarations: [
@@ -56,10 +57,11 @@ import { InitComponent } from './init/init.component';
         DialogModule,
         CheckboxModule,
         ToggleButtonModule,
-        ToastModule
+        ToastModule,
+        ConfirmDialogModule
 
     ],
-    providers: [MessageService],
+    providers: [MessageService,ConfirmationService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
