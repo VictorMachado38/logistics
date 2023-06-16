@@ -43,16 +43,16 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
     options: any;
     overlays: any[] = [];
     marcarNoMapa: boolean = false;
-    titlePage: string = 'Cadastro de Cliente';
+    titlePage: string = 'Client registration';
 
 
     ngOnInit(): void {
         const url = this._location.path();
         if (url !== '/form') {
             this.cliete = Object.assign({}, this._route.snapshot.queryParams);
-            this.titlePage = 'Edição de Cliente';
+            this.titlePage = 'Client Edition';
         } else {
-            this.titlePage = 'Cadastro de Cliente';
+            this.titlePage = 'Customer registration';
         }
 
         this.options = {
@@ -116,7 +116,7 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
             return;
         }
 
-        this._http.post(`http://172.19.0.19:8081/client/save`, this.cliete).subscribe({
+        this._http.post(`http://localhost:8081/client/save`, this.cliete).subscribe({
             next: (retorno: any) => {
                 this.cliete = retorno.data;
                 if (retorno.status === 200) {
@@ -129,7 +129,7 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
                 } else {
                     this._messageService.add({
                         severity: 'error',
-                        summary: 'Erro ao cadastrar cliente'
+                        summary: 'Error registering client'
                     });
                 }
                 const data = retorno.data;
@@ -138,7 +138,7 @@ export class ClientFormComponent implements OnInit, AfterViewInit, AfterViewChec
             error: (err) => {
                 this._messageService.add({
                     severity: 'error',
-                    summary: 'Erro ao cadastrar cliente'
+                    summary: 'Error registering client'
                 });
             },
         });

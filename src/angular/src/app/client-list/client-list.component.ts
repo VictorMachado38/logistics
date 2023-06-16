@@ -17,7 +17,8 @@ export class ClientListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getClientes(" http://172.19.0.19:8081/client/list");
+    // this.getClientes("http://172.19.0.19:8081/client/list");
+    this.getClientes("http://localhost:8081/client/list");
   }
   getClientes(url: any) {
     this._http.get(`${url}`)

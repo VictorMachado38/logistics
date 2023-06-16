@@ -1,10 +1,10 @@
-## Prova Java Logística
+## Java Logistics Basic
 
 <p align="center">
   <img width="704.4" height="462" src="/src/video.gif">
 </p>
 
-## 📋 Pré-requisitos
+## 📋 Prerequisites
 ```
 Java 17
 Angular 13
@@ -13,53 +13,53 @@ IDE
 Docker(opcional)
 ```
 
-## 🐋🚢 Rordar com o docker
-O compose está configurado para rodar o backend na porta 8081, o frontend na porta 9000 e o banco na 5432, caso queira mudar altere o arquivo logistics/src/docker/***[docker-compose.yml](src/docker/docker-compose.yml)***.
+## 🐋🚢 Running with Docker
+Compose is configured to run the backend on port 8081, the frontend on port 9000 and the database on 5432, if you want to change it, change the filelogistics/src/docker/***[docker-compose.yml](src/docker/docker-compose.yml)***.
 
-O docker hub do porjeto é [Docker-hub-link](https://hub.docker.com/repository/docker/victormachado38/logistics/general)
+The Docker Hub for the project is [Docker-hub-link](https://hub.docker.com/repository/docker/victormachado38/logistics/general)
 
-Para rodar o docker, execute o comando:
+To run Docker, execute the command:
 ```
 docker-compose up
 ```
-Depois abre o navegador e digite [***localhost:9000***](http://localhost:9000/).
-## 🔧 Instalação
+Then open your browser and type [***localhost:9000***](http://localhost:9000/).
+## 🔧 Installation
 
 #### Angular
-Instale o node e o npm [clique aqui para aprender](https://nodejs.org/pt-br/download/package-manager)
+Install o node e o npm [click here to learn](https://nodejs.org/pt-br/download/package-manager)
 ```
 npm i @angular/cli@13.3.11
 ```
-Instale as dependências do projeto no diretório ***logistics/src/angular/***, roda o comando:
+Install the project dependencies in the ***logistics/src/angular/*** directory, run the command:
 ```
 npm install
 ```
-Para rodar o projeto, execute o comando:
+To run the project, run the command:
 ```
 ng serve
 ```
 ## Java
-Instale o Java 17 [clique aqui para aprender](https://www.oracle.com/br/java/technologies/javase-jdk17-downloads.html)
+Install o Java 17 [click here to learn](https://www.oracle.com/br/java/technologies/javase-jdk17-downloads.html)
 
-Para rodar o projeto execute esse [arquivo](src/main/java/com/br/logistics/LogisticsApplication.java) localizado "***src/main/java/com/br/logistics/LogisticsApplication.java***"
+To run the project run this [file](src/main/java/com/br/logistics/LogisticsApplication.java) located "***src/main/java/com/br/logistics/LogisticsApplication.java***"
 
 
 ## 🛠️ Construído com
 
 * [Angular](https://www.npmjs.com/package/@angular/cli/v/13.3.11) - Framework  
-* [Maven](https://maven.apache.org/) - Gerente de Dependência
-* [Java](https://www.java.com/pt-BR/) - Linguagem de Programação para o backend
-* [Docker](https://www.docker.com/) - Container para o banco de dados e backend e frontend (TUDO)
-* [PostgreSQL](https://www.postgresql.org/) - Banco de Dados
-* [Spring](https://spring.io/) - Framework para o backend
-* [Hibernate](https://hibernate.org/) - Framework para o backend
-* [Lombok](https://projectlombok.org/) - Framework para o backend
+* [Maven](https://maven.apache.org/) - Dependency Manager
+* [Java](https://www.java.com/pt-BR/) - Programming Language for the backend
+* [Docker](https://www.docker.com/) - Container for the database and backend and frontend (EVERYTHING)
+* [PostgreSQL](https://www.postgresql.org/) - Database
+* [Spring](https://spring.io/) - Framework for the backend
+* [Hibernate](https://hibernate.org/) - Framework for the backend
+* [Lombok](https://projectlombok.org/) - Framework for the backend
 
-## 📌 Versão
+## 📌 Version
 
-Padrão [git](https://git-scm.com/) para controle de versão. 
+Standard [git](https://git-scm.com/) for version control. 
 
-## ✒️ Autores
+## ✒️ Authors
 
 
-* **Victor Augusto** - *Desenvoldevor* - [Linkedin](https://www.linkedin.com/in/victormachado38/)
+* **Victor Augusto** - *Development* - [Linkedin](https://www.linkedin.com/in/victormachado38/)

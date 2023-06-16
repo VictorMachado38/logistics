@@ -7,12 +7,12 @@
 
         <div style="display: flex; width: 100%">
             <div class="field" style=" width: 35%; padding-right: 1rem">
-                <label for="input-code" class="block">Código</label>
+                <label for="input-code" class="block">Code</label>
                 <input style=" width: 100%" id="input-code" placeholder="" type="username"
                        aria-describedby="input-code" pInputText [(ngModel)]="cliete.codigo"/>
             </div>
             <div class="field" style=" width: 75%">
-                <label for="input-cnpj"  [class]="invalCnpj ? 'v-color-red' : ' ' "  class="block">CNPJ</label>
+                <label for="input-cnpj"  [class]="invalCnpj ? 'v-color-red' : ' ' "  class="block">CNPJ (Brasil)</label>
                 <p-inputMask [class]="invalCnpj ? 'ng-invalid ng-dirty w-100' : 'w-100' " [unmask]="true"
                              id="input-cnpj"
                              [(ngModel)]="cliete.cnpj" mask="99.999.999/9999-99"></p-inputMask>
@@ -20,16 +20,16 @@
         </div>
 
         <div class="field" style=" width: 100%">
-            <label for="input-name" [class]="invalCnpj ? 'v-color-red' : '' " class="block">Nome</label>
+            <label for="input-name" [class]="invalCnpj ? 'v-color-red' : '' " class="block">Name</label>
             <input style=" width: 100%" id="input-name" [class]="invalCnpj ? 'ng-invalid ng-dirty' : '' " placeholder="" type="username"
                    aria-describedby="username1-help" pInputText [(ngModel)]="cliete.nome"/>
         </div>
         <hr>
-        <samp class="format-addres-title">Endereço</samp>
+        <samp class="format-addres-title">Address</samp>
 
         <div style="display: flex; width: 100%">
             <div class="field" style=" width: 35%;  padding-right: 1rem">
-                <label for="input-cep" class="block">CEP</label>
+                <label for="input-cep" class="block">Zip code (Brasil)</label>
                 <p-inputMask [autoClear]="false" [class]="invalCnpj ? 'ng-invalid ng-dirty w-100' : 'w-100' "
                              [unmask]="true"
                              id="input-cep"
@@ -39,7 +39,7 @@
             </div>
 
             <div class="field" style=" width: 35%;">
-                <label for="input-state" class="block">Estado</label>
+                <label for="input-state" class="block">State</label>
                 <input style=" width: 100%" [readOnly]="true" class="no-focus-no-focus" id="input-state" placeholder=""
                        type="username"
                        aria-describedby="input-code" pInputText [(ngModel)]="cliete.estado"/>
@@ -54,14 +54,14 @@
 
         <div style="display: flex; width: 100%">
             <div class="field" style=" width: 50%;  padding-right: 1rem">
-                <label for="input-city" class="block">Cidade</label>
+                <label for="input-city" class="block">City</label>
                 <input [readOnly]="true" class="no-focus-no-focus" style=" width: 100%;" id="input-city" placeholder=""
                        type="username"
                        aria-describedby="input-city" pInputText [(ngModel)]="cliete.cidade"/>
             </div>
 
             <div class="field" style=" width: 50%;">
-                <label for="input-sector" class="block">Setor ou Bairro</label>
+                <label for="input-sector" class="block">Sector or Neighborhood</label>
                 <input style=" width: 100%" [readOnly]="true" class="no-focus-no-focus" id="input-sector" placeholder=""
                        type="username"
                        aria-describedby="input-sector" pInputText [(ngModel)]="cliete.setor"/>
@@ -70,20 +70,20 @@
         </div>
 
         <div class="field" style=" width: 100%">
-            <label for="input-address" class="block">Endereço</label>
+            <label for="input-address" class="block">Address</label>
             <input style=" width: 100%" [readOnly]="true" class="no-focus-no-focus" id="input-address" placeholder=""
                    type="username"
                    aria-describedby="input-address" pInputText [(ngModel)]="cliete.endereco"/>
         </div>
 
         <div class="field" style=" width: 100%">
-            <label for="input-complement" class="block">Complemento</label>
+            <label for="input-complement" class="block">Complement</label>
             <input style=" width: 100%" id="input-complement" placeholder="" type="username"
                    aria-describedby="input-complement" pInputText [(ngModel)]="cliete.complemento"/>
         </div>
 
 
-        <button (click)="sendForm()" pButton pRipple type="button" label="Enviar"
+        <button (click)="sendForm()" pButton pRipple type="button" label="Send"
                 class="p-button-outlined p-button-rounded p-button-sm"></button>
 
         {{selectedPosition | json}}
@@ -99,7 +99,7 @@
                 (onMapClick)="handleMapClick($event)" (onOverlayClick)="handleOverlayClick($event)"
                 (onOverlayDragEnd)="handleDragEnd($event)"></p-gmap>
 
-        <button type="button" pButton label="Limpar Maracador" icon="pi pi-times" (click)="clear()"
+        <button type="button" pButton label="Clear Marker" icon="pi pi-times" (click)="clear()"
                 style="margin-right:.25em"></button>
         <button type="button" pButton label="Zoom" icon="pi pi-plus" (click)="zoomIn(gmap.getMap())"
                 style="margin-right:.25em"></button>
