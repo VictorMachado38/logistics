@@ -1,5 +1,7 @@
 ## Java Logistics Basic
 
+[***YouTube Link***](https://youtu.be/TX3t82Q1MUk)
+
 <p align="center">
   <img width="704.4" height="462" src="/src/video.gif">
 </p>
@@ -44,7 +46,7 @@ Install o Java 17 [click here to learn](https://www.oracle.com/br/java/technolog
 To run the project run this [file](src/main/java/com/br/logistics/LogisticsApplication.java) located "***src/main/java/com/br/logistics/LogisticsApplication.java***"
 
 
-## 🛠️ Built with
+## 🛠️ built with
 
 * [Angular](https://www.npmjs.com/package/@angular/cli/v/13.3.11) - Framework  
 * [Maven](https://maven.apache.org/) - Dependency Manager
