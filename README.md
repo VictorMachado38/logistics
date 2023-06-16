@@ -44,7 +44,7 @@ Install o Java 17 [click here to learn](https://www.oracle.com/br/java/technolog
 To run the project run this [file](src/main/java/com/br/logistics/LogisticsApplication.java) located "***src/main/java/com/br/logistics/LogisticsApplication.java***"
 
 
-## 🛠️ Construído com
+## 🛠️ Built with
 
 * [Angular](https://www.npmjs.com/package/@angular/cli/v/13.3.11) - Framework  
 * [Maven](https://maven.apache.org/) - Dependency Manager

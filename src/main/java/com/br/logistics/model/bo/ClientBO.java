@@ -61,8 +61,8 @@ public class ClientBO {
 
             return ResponseDTO.<FormDTO>builder()
                     .data(formDTO)
-                    .message("Cliente salvo com sucesso")
-                    .description("O cliente " + formDTO.getNome() + " foi salvo com sucesso")
+                    .message("Client saved")
+                    .description("The client " + formDTO.getNome() + " was successfully saved")
                     .status(OK.getStatusCode())
                     .build();
         }
@@ -70,8 +70,8 @@ public class ClientBO {
            FormDTO formDTOup = dao.upgrade(formDTO);
            return ResponseDTO.<FormDTO>builder()
                    .data(formDTOup  )
-                   .message("Cliente atualizado com sucesso")
-                   .description("O cliente " + formDTO.getNome() + " foi atualizado com sucesso")
+                   .message("Client updated")
+                   .description("The client " + formDTO.getNome() + " has been successfully updated")
                    .status(OK.getStatusCode())
                    .build();
         }
@@ -81,8 +81,8 @@ public class ClientBO {
         List<FormDTO> list = dao.busca();
         return ResponseDTO.<List<FormDTO>>builder()
                 .data(list)
-                .message("Clientes listados com sucesso")
-                .description("Clientes listados com sucesso")
+                .message("List Clients")
+                .description("Successfully Listed Clients")
                 .status(OK.getStatusCode())
                 .build();
     }
